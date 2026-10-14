@@ -31,3 +31,21 @@ class TestLogica(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestAprobados(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.NamedTemporaryFile(delete=False, suffix=".json")
+        self.tmp.close()
+        os.remove(self.tmp.name)
+        datos.ARCHIVO = self.tmp.name
+
+    def tearDown(self):
+        if os.path.exists(self.tmp.name):
+            os.remove(self.tmp.name)
+
+    def test_aprobados(self):
+        logica.registrar("Ana", 9)
+        logica.registrar("Luis", 5)
+        nombres = [n["nombre"] for n in logica.aprobados()]
+        self.assertEqual(nombres, ["Ana"])

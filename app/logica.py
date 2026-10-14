@@ -14,3 +14,8 @@ def promedio():
         return 0
     total = sum(n["nota"] for n in notas)
     return total / len(notas)
+
+
+def aprobados(minima=7):
+    notas = datos.cargar_notas()
+    return [n for n in notas if n["nota"] >= minima]
